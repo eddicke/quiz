@@ -14,8 +14,8 @@ map.image = game.assets['http://enchantjs.com/wordpress/wp-content/uploads/2014/
 var baseMap = [
   [  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0],
   [  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0],
-  [  0,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  0,  0],
-  [  0,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  0,  0,  0],
+  [  0,  0,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  0,  0],
+  [  0,  0,  0,  0,  2,  2,  2,  2,  2,  2,  2,  2,  2,  0,  0,  0],
   [  0,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  0],
   [  0,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  0],
   [  0,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  0],
@@ -58,9 +58,24 @@ game.rootScene.addChild(map);
             initialize: function(x,y){
                 enchant.Sprite.call(this, 16, 16);
                 this.image = game.assets['icon0.png']; // set image
-                this.moveTo(16, player.y + 8);       // move to the position
+                this.moveTo(player.x + 2, player.y + 8);       // move to the position
                 this.tl.moveBy(320, 0, 30);        // set movement
                 this.frame = 15;                   // set image data
+              this.x = x;
+              this.tx = this.x
+              this.y = y
+              this.ty = this.y
+              
+              game.rootScene.addChild(this);     // add to canvas
+            }
+        });
+
+ // make new class for intelligent fruit
+        var Carrot = enchant.Class.create(enchant.Sprite, {
+            initialize: function(x,y){
+                enchant.Sprite.call(this, 16, 16);
+                this.image = game.assets['icon0.png']; // set image
+                this.frame = 10;                   // set image data
               this.x = x;
               this.tx = this.x
               this.y = y
@@ -104,7 +119,7 @@ game.rootScene.addChild(map);
           var apple = new Apple(player.x, player.y);
         });
       //
-var badapple = new Apple(-40, 29)
+var badapple = new Carrot(-40, 29)
 setInterval(function(){
 badapple.tx = player.x;
 badapple.ty = player.y;
