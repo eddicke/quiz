@@ -30,8 +30,28 @@ var baseMap = [
   [  0,  2,  2,  2,  2,  2,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0]
 ];
 map.loadData(baseMap);
+      
  
 game.rootScene.addChild(map);
+map.collisionData = [
+  [  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0],
+  [  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0],
+  [  0,  0,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  0,  0],
+  [  0,  0,  0,  0,  2,  2,  2,  2,  2,  2,  2,  2,  2,  0,  0,  0],
+  [  0,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  0],
+  [  0,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  0],
+  [  0,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  0],
+  [  0,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  0],
+  [  0,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  0],
+  [  0,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  0],
+  [  0,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  0],
+  [  0,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  0,  0],
+  [  0,  2,  2,  2,  2,  2,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0],
+  [  0,  2,  2,  2,  2,  2,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0],
+  [  0,  2,  2,  2,  2,  2,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0],
+  [  0,  2,  2,  2,  2,  2,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0]
+];
+              
         // make new class for player
         var Player = enchant.Class.create(enchant.Sprite, {
             initialize: function(x,y){
@@ -115,13 +135,19 @@ var badapple = new Carrot(400, 200)
 setInterval(function(){
 badapple.tx = player.x;
 badapple.ty = player.y;
+  //boundaries
+  if (map.hitTest(player.x, player.y)) {
+                    player.x = player.x - 0.5;
+player.y = player.y - 0.5;
+   // game.rootScene.removeChild(player);
+  }
   //intelligent fruit is bad
           if(badapple.intersect(player)){
            
           player.frame = 3;
             
             setTimeout(function(){
-              game.rootScene.removeChild(player);
+             // game.rootScene.removeChild(player);
               alert('gotcha');
               }, 3000);
           }
