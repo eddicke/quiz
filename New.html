@@ -1,6 +1,7 @@
 <!doctype html>
 <html><head><script src="enchant.js"></script></head>
 <body style="margin:0; padding: 0;">
+  <title> html is fun </title>
 <script>
     enchant(); // initialize
     var game = new Core(320, 320);
@@ -119,10 +120,14 @@ game.rootScene.addChild(map);
           var apple = new Apple(player.x, player.y);
         });
       //
-var badapple = new Carrot(-40, 29)
+var badapple = new Carrot(400, 200)
 setInterval(function(){
 badapple.tx = player.x;
 badapple.ty = player.y;
+  //intelligent fruit is bad
+          if(badapple.intersect(player)){
+            game.rootScene.removeChild(player);
+            }
 })
         // add event listener (called when click/touch moved)
         game.rootScene.on('touchend', function(evt){
@@ -146,6 +151,7 @@ badapple.ty = player.y;
                 game.rootScene.removeChild(hits[i][1]);
                 score ++;
             }
+          
         });
     
     };
