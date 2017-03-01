@@ -5,9 +5,8 @@
 <script>
     enchant(); // initialize
     var game = new Core(320, 320);
-    game.preload('chara1.png', 'icon0.png','http://enchantjs.com/wordpress/wp-content/uploads/2014/06/map0.png'); // preload image
+    game.preload('chara1.png', 'icon0.png','http://enchantjs.com/wordpress/wp-content/uploads/2014/06/map0.png','https://raw.githubusercontent.com/eddicke/quiz/master/8.png'); // preload image
     game.fps = 20;
-
     game.onload = function(){
       //the map
         var map = new Map(26, 26);
@@ -33,7 +32,6 @@ var baseMap = [
 map.loadData(baseMap);
  
 game.rootScene.addChild(map);
-
         // make new class for player
         var Player = enchant.Class.create(enchant.Sprite, {
             initialize: function(x,y){
@@ -43,17 +41,15 @@ game.rootScene.addChild(map);
               this.tx = this.x
               this.y = y
               this.ty = this.y
-                this.frame = 5;                   // set image data
+                this.frame = [6, 6, 7, 7];                   // set image data
                 game.rootScene.addChild(this);     // add to canvas
             },
           onenterframe: function() {
         slow = 30; 
             this.x += (this.tx - this.x) / slow;
         this.y += (this.ty - this.y) / slow;
-
     }
         });
-
         // make new class for apple
         var Apple = enchant.Class.create(enchant.Sprite, {
             initialize: function(x,y){
@@ -70,28 +66,25 @@ game.rootScene.addChild(map);
               game.rootScene.addChild(this);     // add to canvas
             }
         });
-
  // make new class for intelligent fruit
         var Carrot = enchant.Class.create(enchant.Sprite, {
             initialize: function(x,y){
-                enchant.Sprite.call(this, 16, 16);
-                this.image = game.assets['icon0.png']; // set image
-                this.frame = 10;                   // set image data
+                enchant.Sprite.call(this, 32, 32);
+                this.image = game.assets['https://raw.githubusercontent.com/eddicke/quiz/master/8.png']; // set image
+                this.frame = [1,2,3,4,5,6,7];                  // set image data
               this.x = x;
               this.tx = this.x
               this.y = y
               this.ty = this.y
-              
+              //
               game.rootScene.addChild(this);     // add to canvas
             },
              onenterframe: function() {
         slow = 30; 
             this.x += (this.tx - this.x) / slow;
         this.y += (this.ty - this.y) / slow;
-
     }
         });
-
         // make new class for enemy
         var Enemy = enchant.Class.create(enchant.Sprite, {
             initialize: function(){
@@ -99,20 +92,18 @@ game.rootScene.addChild(map);
                 this.image = game.assets['chara1.png']; // set image
                 this.moveTo(320, Math.floor(Math.random() * 320)); // set position
                 this.scaleX = -1;
+              this.frame = [6, 6, 7, 7, 4, 4, 4, 4, 4, 4, 4]
                 this.tl.moveBy(-360, 0, 160);      // set movement
                 game.rootScene.addChild(this);     // canvas
             }
         });
-
         var player = new Player(20, 29);
-
         // generate enemy every 60 frames
         game.rootScene.tl.then(function() {
             var enemy = new Enemy();
       enemy.tl.moveBy(player.x - 360, player.y, 370);      
           //enemy.y = player.y
         }).delay(30).loop();                    // wait 60 frames and loop it!
-
         // add event listener (called when click/touch started)
         game.rootScene.on('touchstart', function(evt){
             player.ty = evt.localY;    // set position to touch-y position
@@ -126,8 +117,14 @@ badapple.tx = player.x;
 badapple.ty = player.y;
   //intelligent fruit is bad
           if(badapple.intersect(player)){
-            game.rootScene.removeChild(player);
-            }
+           
+          player.frame = 3;
+            
+            setTimeout(function(){
+              game.rootScene.removeChild(player);
+              alert('gotcha');
+              }, 3000);
+          }
 })
         // add event listener (called when click/touch moved)
         game.rootScene.on('touchend', function(evt){
@@ -155,7 +152,6 @@ badapple.ty = player.y;
         });
     
     };
-
     game.start(); // start your game!
 </script>
 </body>
