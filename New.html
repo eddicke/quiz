@@ -1,0 +1,81 @@
+<!doctype html>
+<html><head><script src="enchant.js"></script></head>
+<body style="margin:0; padding: 0;">
+<script>
+    enchant(); // initialize
+    var game = new Core(320, 320);
+    game.preload('chara1.png', 'icon0.png'); // preload image
+    game.fps = 20;
+
+    game.onload = function(){
+        // make new class for player
+        var Player = enchant.Class.create(enchant.Sprite, {
+            initialize: function(x,y){
+                enchant.Sprite.call(this, 32, 32);
+                this.image = game.assets['chara1.png'];
+              this.x = x;
+              this.tx = this.x
+              this.y = y
+              this.ty = this.y
+                this.frame = 5;                   // set image data
+                game.rootScene.addChild(this);     // add to canvas
+            },
+          onenterframe: function() {
+        slow = 30; 
+            this.x += (this.tx - this.x) / slow;
+        this.y += (this.ty - this.y) / slow;
+
+    }
+        });
+
+        // make new class for apple
+        var Apple = enchant.Class.create(enchant.Sprite, {
+            initialize: function(){
+                enchant.Sprite.call(this, 16, 16);
+                this.image = game.assets['icon0.png']; // set image
+                this.moveTo(16, player.y + 8);       // move to the position
+                this.tl.moveBy(320, 0, 30);        // set movement
+                this.frame = 15;                   // set image data
+                game.rootScene.addChild(this);     // add to canvas
+            }
+        });
+
+        // make new class for enemy
+        var Enemy = enchant.Class.create(enchant.Sprite, {
+            initialize: function(){
+                enchant.Sprite.call(this, 32, 32);
+                this.image = game.assets['chara1.png']; // set image
+                this.moveTo(320, Math.floor(Math.random() * 320)); // set position
+                this.scaleX = -1;
+                this.tl.moveBy(-360, 0, 160);      // set movement
+                game.rootScene.addChild(this);     // canvas
+            }
+        });
+
+        var player = new Player(20, 29);
+
+        // generate enemy every 60 frames
+        game.rootScene.tl.then(function() {
+            var enemy = new Enemy();
+        }).delay(30).loop();                    // wait 60 frames and loop it!
+
+        // add event listener (called when click/touch started)
+        game.rootScene.on('touchstart', function(evt){
+            player.ty = evt.localY;    // set position to touch-y position
+          player.tx = evt.localX;
+          var apple = new Apple();
+        });
+
+        // add event listener (called when click/touch moved)
+        game.rootScene.on('touchend', function(evt){
+            player.ty = evt.localY;  
+          player.tx = evt.localX;
+          //player.tx = 
+          // set position to touch-y position
+        });
+    };
+
+    game.start(); // start your game!
+</script>
+</body>
+</html>
