@@ -136,17 +136,25 @@ var badguy2 = new Carrot(200, 200);
 var score = 0;
         var label = new enchant.Label();
         label.font = "12px 'Arial'";
-        game.rootScene.addChild(label);
+      game.rootScene.addChild(label);
       //scoring :)
 setInterval(function(){
 badguy.tx = player.x;
 badguy.ty = player.y;
   badguy2.tx = player.x;
 badguy2.ty = player.y;
+  if(badguy.x < player.x + 0.5 || badguy2.x < player.x + 0.5  ){
+    badguy.scaleX = -1;
+    badguy2.scaleX = -1;
+  }
+  if(badguy.x > player.x + 0.5 || badguy2.x > player.x + 0.5  ){
+    badguy.scaleX = 1;
+     badguy2.scaleX = 1;
+  }
   //boundaries
   if (map.hitTest(player.x, player.y)) {
-                    player.x = player.x - 0.5;
-player.y = player.y - 0.5;
+                    player.tx = player.x * 0.7;
+    player.ty = player.y * 0.7;
    // game.rootScene.removeChild(player);
   }
   
