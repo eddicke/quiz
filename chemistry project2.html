@@ -1,0 +1,84 @@
+<!doctype html>
+<html><head><script src="enchant.js"></script></head>
+<body style="margin:0; padding: 0;">
+<script>
+    enchant(); // initialize
+    var game = new Core(320, 320);
+    game.preload('chara1.png', 'icon0.png'); // preload image
+    game.fps = 20;
+
+    game.onload = function(){
+      
+
+        // make new class for apple
+        var Apple = enchant.Class.create(enchant.Sprite, {
+            initialize: function(){
+                enchant.Sprite.call(this, 16, 16);
+                this.image = game.assets['icon0.png']; // set image
+                       // set movement
+                this.frame = 15;   
+             
+                // set image data
+                game.rootScene.addChild(this);     // add to canvas
+            }
+        });
+
+        // make new class for enemy
+        var Enemy = enchant.Class.create(enchant.Sprite, {
+            initialize: function(){
+                enchant.Sprite.call(this, 16, 16);
+                this.image = game.assets['icon0.png']; // set image
+                this.moveTo(320, Math.floor(Math.random() * 320)); // set position
+                this.scaleX = -1;
+              this.frame = 19
+                this.tl.moveBy(-360, 0, 160);      // set movement
+                game.rootScene.addChild(this);     // canvas
+            }
+        });
+
+      var Enemy2 = enchant.Class.create(enchant.Sprite, {
+            initialize: function(){
+                enchant.Sprite.call(this, 16, 16);
+                this.image = game.assets['icon0.png']; // set image
+                this.moveTo(320, Math.floor(Math.random() * 320)); // set position
+                this.scaleX = -1;
+              this.scaleX = 4
+              this.scaleY = 4
+              this.frame = 47
+                this.tl.moveBy(-360, 0, 160);      // set movement
+                game.rootScene.addChild(this);     // canvas
+            }
+        });
+
+
+        // generate enemy every 60 frames
+        game.rootScene.tl.then(function() {
+            var enemy = new Enemy();
+          var enemy = new Enemy2();
+        }).delay(30).loop();                    // wait 60 frames and loop it!
+       
+            var apple = new Apple();
+        
+        game.rootScene.on('touchmove', function(evt){
+          apple.y = evt.localY;  
+          apple.x = evt.localX;    // set position to touch-y position
+        });
+        
+        var score = 0;
+        
+        game.rootScene.on('enterframe', function(){
+            var hits = Apple.intersect(Enemy);
+            for(var i = 0, len = hits.length; i < len; i++){
+              // game.rootScene.removeChild(hits[i][0]);
+                game.rootScene.removeChild(hits[i][1]);
+ hits[i][0].frame = 20
+              score ++;
+            }
+        });
+      
+    };
+
+    game.start(); // start your game!
+</script>
+</body>
+</html>
