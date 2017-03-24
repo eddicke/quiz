@@ -1,27 +1,48 @@
 <!doctype html>
 <html><head><script src="https://gitcdn.xyz/repo/uei/enchant.js-builds/master/build/enchant.js"></script></head>
 <body style="margin:0; padding: 0;">
-  <div id = "wrd"> hello intruders </div>
+  <div id = "wrd"> hello students </div>
   <div id = "formulae"> FM </div>
+  <div id = "time"> FM </div>
+  <div id = "task"> Bond with the red atom to form C40H56 </div>
   <style>
     #wrd{
       position: fixed;
       background-color: orange;
       bottom: 40px;
-      font-size: 200%;
+      //font-size: 200%;
     }
       #formulae{
       position: absolute;
       left: 260px;
       background-color: green;
       top: 10px;
-      font-size: 200%;
+      //font-size: 200%;
+    }
+      #time{
+      position: absolute;
+      right: 260px;
+      background-color: yellow;
+      top: 50px;
+      //font-size: 200%;
+    }
+         #task{
+      position: absolute;
+      right: 50px;
+      background-color: green;
+      top: 10px;
+      font-size: 100%;
+      border-radius: 15px 50px 30px;
+    background: #73AD21;
+    padding: 30px; 
+    width: 100px;
+    height: 50px;
     }
   </style>
   <script>
    var container = document.getElementById('wrd');
     
-var things = ['welcome to KCI', 'Are you ready for the atomic bonding challenge! he-he-he!', "let's go!"];
+var things = ["Hey! it's Ademola","bond with the red anions to form C40H56", 'Are you ready for the atomic bonding challenge! he-he-he!', "let's go!"];
 var t = -1;
 var thing = '';
 var message = container.innerHTML;
@@ -164,9 +185,14 @@ enemy2.ty = apple.y + 2;
               // game.rootScene.removeChild(hits[i][0]);
                 game.rootScene.removeChild(hits[i][1]);
  hits[i][0].frame = 20
-              score ++;
-              var formulae =  document.getElementById('formulae')
- formulae.innerHTML = "f"+score+"Mg";     
+              score += 2;
+               var x = 'C';
+ var y = 'H';                        
+ var resultX = x.sup();
+ var resultY = y.sup();             
+ var formulae =  document.getElementById('formulae')
+ formulae.innerHTML = resultX+score+resultY+56
+
             }
         });
       //electron stealers
@@ -176,11 +202,32 @@ enemy2.ty = apple.y + 2;
             for(var i = 0, len = hits.length; i < len; i++){
               
  hits[i][0].frame = 19
+ var x = 'C';
+ var y = 'H';                        
+ var resultX = x.sup();
+ var resultY = y.sup();             
  var formulae =  document.getElementById('formulae')
- formulae.innerHTML = "f"+score+"Mg"     
+ formulae.innerHTML = resultX+score+resultY+56  
  score--;
             }
         });
+      var timer = document.getElementById('time')
+      var currentT = 30
+   var counter = setInterval(function(){
+      currentT--
+        timer.innerHTML = currentT + 's';
+        if(currentT === 0){
+          game.stop()
+        clearInterval(counter)  
+          if(score < 40){
+     document.getElementById('task').innerHTML = 'sorry😯'
+        }
+        else{
+          
+         document.getElementById('task').innerHTML = 'hurray'
+         }
+        }
+      }, 2000)
       
     };
 
