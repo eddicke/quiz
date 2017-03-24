@@ -1,6 +1,73 @@
 <!doctype html>
 <html><head><script src="https://gitcdn.xyz/repo/uei/enchant.js-builds/master/build/enchant.js"></script></head>
 <body style="margin:0; padding: 0;">
+  <div id = "wrd"> hello intruders </div>
+  <div id = "formulae"> FM </div>
+  <style>
+    #wrd{
+      position: fixed;
+      background-color: orange;
+      bottom: 10px;
+    }
+      #formulae{
+      position: absolute;
+      left: 260px;
+      background-color: green;
+      top: 10px;
+    }
+  </style>
+  <script>
+   var container = document.getElementById('wrd');
+    
+var things = ['welcome to KCI', 'Are you ready for the atomic bonding challenge! he-he-he!', "let's go!"];
+var t = -1;
+var thing = '';
+var message = container.innerHTML;
+var mode = 'write';
+var delay = 1000;
+function updateText(txt) {
+  container.innerHTML = txt;
+}
+function tick() {
+    if(container.innerHTML.length == 0) {
+        t++;
+        thing = things[t];
+        message = '';
+        mode = 'write';
+    }
+    switch(mode) {
+        case 'write' :
+            message += thing.slice(0, 1);
+            thing = thing.substr(1);
+            updateText(message);
+            if(thing.length === 0 && t === (things.length - 1)) {
+                window.clearTimeout(timeout);
+                return;
+            }
+            if(thing.length == 0){
+                mode = 'delete';
+                delay = 1500;
+            } else {
+                delay = 32 + Math.round(Math.random() * 40);
+            }
+            break;
+        case 'delete' :
+            message = message.slice(0, -1);
+            updateText(message);
+            if(message.length == 0)
+            {
+                mode = 'write';
+                delay = 1500;
+            } else {
+                delay = 32 + Math.round(Math.random() * 100);
+            }
+            break;
+    }
+  
+    timeout = window.setTimeout(tick, delay);
+}
+var timeout = window.setTimeout(tick, delay);
+  </script>
 <script>
     enchant(); // initialize
     var game = new Core(320, 320);
@@ -96,6 +163,9 @@ enemy2.ty = apple.y + 2;
                 game.rootScene.removeChild(hits[i][1]);
  hits[i][0].frame = 20
               score ++;
+              var formulae =  document.getElementById('formulae')
+ formulae.innerHTML = "f"+score+"Mg"     
+ score++;
             }
         });
       //electron stealers
@@ -105,7 +175,9 @@ enemy2.ty = apple.y + 2;
             for(var i = 0, len = hits.length; i < len; i++){
               
  hits[i][0].frame = 19
-              score ++;
+ var formulae =  document.getElementById('formulae')
+ formulae.innerHTML = "f"+score+"Mg"     
+ score -= 0.1;
             }
         });
       
